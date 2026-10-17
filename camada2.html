@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important} body{margin:0}</style>
+<title>Para Geovanna, parte 2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;1,400;1,500&family=Caveat:wght@500;700&family=Karla:wght@400;500;600&display=swap">
+<style>
+/* Layout: uma mesa rosé com bilhetes empilhados no centro; ela arrasta um por um até chegar ao coração */
+:root {
+  --bg: #fbf3f2; --paper: #fffafa; --ink: #4a2c33; --muted: #8e6a72;
+  --rose: #c96f82; --blush: #f1d3d8; --line: #ead6da; --rule: #f0dfe2;
+  --display: "Cormorant", "Cormorant Garamond", Georgia, serif;
+  --hand: "Caveat", "Segoe Print", "Bradley Hand", cursive;
+  --body: "Karla", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #23171b; --paper: #fff7f6; --ink: #4a2c33; --muted: #c4a3ab; --rose: #d9798d; --blush: #4a2f37; --line: #46313a; --rule: #f0dfe2; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #23171b; --paper: #fff7f6; --ink: #4a2c33; --muted: #c4a3ab; --rose: #d9798d; --blush: #4a2f37; --line: #46313a; --rule: #f0dfe2; color-scheme: dark; }
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--body);
+  overflow: hidden; touch-action: none;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.bg-deco { position: fixed; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(36rem 28rem at 8% 8%, var(--blush), transparent 70%),
+    radial-gradient(32rem 26rem at 95% 50%, var(--blush), transparent 70%),
+    radial-gradient(30rem 24rem at 12% 95%, var(--blush), transparent 70%);
+  opacity: .8; }
+.bg-deco::after { content: ""; position: absolute; inset: 0; background: var(--line); opacity: .6;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M20 26c0-5 6-6 7-1 1-5 7-4 7 1 0 5-7 8-7 11 0-3-7-6-7-11z' fill='none' stroke='black' stroke-width='1.2'/%3E%3Cpath d='M82 84c0-4 5-5 6-1 1-4 6-3 6 1 0 4-6 7-6 9 0-2-6-5-6-9z' fill='black'/%3E%3Ccircle cx='96' cy='22' r='1.6' fill='black'/%3E%3Ccircle cx='34' cy='96' r='1.4' fill='black'/%3E%3C/svg%3E") 0 0 / 120px 120px;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M20 26c0-5 6-6 7-1 1-5 7-4 7 1 0 5-7 8-7 11 0-3-7-6-7-11z' fill='none' stroke='black' stroke-width='1.2'/%3E%3Cpath d='M82 84c0-4 5-5 6-1 1-4 6-3 6 1 0 4-6 7-6 9 0-2-6-5-6-9z' fill='black'/%3E%3Ccircle cx='96' cy='22' r='1.6' fill='black'/%3E%3Ccircle cx='34' cy='96' r='1.4' fill='black'/%3E%3C/svg%3E") 0 0 / 120px 120px; }
+
+.top { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 1;
+  padding-block: 18px 0; text-align: center; pointer-events: none;
+  display: flex; flex-direction: column; gap: 2px; }
+.top .eyebrow { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.top .name { font-family: var(--display); font-style: italic; font-size: 30px; color: var(--rose); line-height: 1.1; }
+
+.paper {
+  position: absolute; left: 50%; top: 52%;
+  width: min(330px, calc(100vw - 48px));
+  padding: 30px 26px 26px 42px;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(90deg, transparent 28px, rgba(201,111,130,.45) 28px, rgba(201,111,130,.45) 30px, transparent 30px),
+    repeating-linear-gradient(transparent 0 31px, var(--rule) 31px 32px);
+  border-radius: 4px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.03), 0 18px 34px -18px rgba(90, 30, 45, .45);
+  color: var(--ink);
+  cursor: grab; user-select: none; -webkit-user-select: none; touch-action: none;
+  display: flex; flex-direction: column; gap: 8px;
+  transition: box-shadow .2s;
+}
+.paper.dragging { cursor: grabbing; box-shadow: 0 30px 50px -20px rgba(90, 30, 45, .55); }
+.paper p { margin: 0; font-family: var(--hand); font-size: 30px; line-height: 32px; font-weight: 500; text-wrap: balance; }
+.paper p.small { font-size: 24px; color: var(--muted); }
+.paper .sign { align-self: flex-end; color: var(--rose); font-weight: 700; }
+.paper .big { font-family: var(--display); font-style: italic; font-size: 46px; line-height: 1.05; color: var(--rose); }
+
+.paper.photo { padding: 12px 12px 18px; background-image: none; }
+.paper.photo .art { width: 100%; height: auto; display: block; border-radius: 3px; }
+.paper.photo p { text-align: center; padding-inline: 6px; }
+
+.paper.red { background: var(--rose); background-image: none; padding: 34px 28px; text-align: center; }
+.paper.red p { color: #fffafa; }
+.paper.red .big { color: #fffafa; font-size: 54px; }
+
+.paper.heart { width: min(300px, calc(100vw - 48px)); aspect-ratio: 1 / .92; padding: 0; background: none; box-shadow: none;
+  align-items: center; justify-content: center; cursor: default; }
+.paper.heart svg { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 18px 24px rgba(150, 50, 75, .35)); }
+.paper.heart .inside { position: relative; text-align: center; margin-top: -8%; display: flex; flex-direction: column; gap: 2px; }
+.paper.heart p { color: #fffafa; font-size: 34px; }
+.paper.heart .big { color: #fffafa; font-size: 40px; }
+.beat-heart { animation: pulse 1.8s ease-in-out infinite; transform-origin: center; }
+@keyframes pulse { 0%,100% { transform: scale(1); } 14% { transform: scale(1.05); } 28% { transform: scale(1); } 42% { transform: scale(1.03); } }
+.beat { transform-box: fill-box; transform-origin: center; animation: beat 1.6s ease-in-out infinite; }
+@keyframes beat { 0%,100% { transform: scale(1); } 15% { transform: scale(1.18); } 30% { transform: scale(1); } 45% { transform: scale(1.12); } }
+
+.bottom { position: fixed; left: 0; right: 0; bottom: env(safe-area-inset-bottom, 0px); z-index: 0;
+  padding-block: 0 18px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.bottom button, .bottom a {
+  font: 600 14px var(--body); color: var(--rose); background: var(--paper); border: 1px solid var(--line);
+  border-radius: 999px; padding: 9px 18px; cursor: pointer; text-decoration: none;
+}
+.bottom button:focus-visible, .bottom a:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; }
+.bottom button[hidden] { display: none; }
+
+@media (prefers-reduced-motion: reduce) { .beat, .beat-heart { animation: none; } }
+</style>
+</head>
+<body>
+
+<div class="bg-deco" aria-hidden="true"></div>
+<header class="top">
+  <span class="eyebrow">Parte 2 · só para você</span>
+  <span class="name">Geovanna</span>
+</header>
+
+<main id="desk" aria-label="Bilhetes para arrastar">
+  <div class="paper heart">
+    <svg class="beat-heart" viewBox="0 0 100 92" aria-hidden="true"><path d="M50 90 C 50 90 4 62 4 30 C 4 14 16 4 29 4 C 39 4 46 10 50 18 C 54 10 61 4 71 4 C 84 4 96 14 96 30 C 96 62 50 90 50 90Z" fill="#d6687f"/></svg>
+    <div class="inside">
+      <p>Eu te amo,</p>
+      <span class="big">Geovanna.</span>
+    </div>
+  </div>
+
+  <div class="paper">
+    <p>Obrigado por ter chegado na minha vida do jeito que chegou: de mansinho, e mudando tudo.</p>
+    <p class="sign">Geferson</p>
+  </div>
+
+  <div class="paper red">
+    <p>Você é a pessoa mais importante</p>
+    <span class="big">pra mim.</span>
+  </div>
+
+  <div class="paper photo">
+    <svg class="art" viewBox="0 0 400 400" role="img" aria-label="Ilustração de Geovanna e Geferson numa selfie de rosto colado, sorrindo, numa rua ensolarada">
+        <defs>
+          <clipPath id="frame2"><rect width="400" height="400" rx="4"/></clipPath>
+          <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde9e2"/><stop offset="1" stop-color="#f8d6d2"/></linearGradient>
+        </defs>
+        <g clip-path="url(#frame2)">
+          <rect width="400" height="400" fill="url(#sky2)"/>
+          <circle cx="360" cy="40" r="46" fill="#fff4e4" opacity=".9"/>
+          <rect x="0" y="58" width="400" height="150" fill="#f2c4a6"/>
+          <rect x="0" y="52" width="400" height="10" fill="#e6ad8c"/>
+          <g fill="#e7b190"><rect x="18" y="82" width="34" height="44" rx="3"/><rect x="72" y="82" width="34" height="44" rx="3"/><rect x="300" y="82" width="34" height="44" rx="3"/><rect x="354" y="82" width="34" height="44" rx="3"/></g>
+          <rect x="0" y="200" width="400" height="200" fill="#ece1dc"/>
+          <rect x="0" y="200" width="400" height="6" fill="#dccdc7"/>
+          <g fill="#94c09a"><circle cx="384" cy="196" r="26"/><circle cx="364" cy="210" r="18"/></g>
+          <g fill="#e5839a"><circle cx="376" cy="184" r="4"/><circle cx="392" cy="204" r="3"/><circle cx="360" cy="200" r="3"/></g>
+
+          <!-- ela -->
+          <path d="M40 400 C18 300 28 170 70 125 C100 95 168 95 192 132 C204 162 198 220 192 262 L174 400Z" fill="#2e1c18"/>
+          <path d="M34 400 C44 350 78 330 120 326 C152 330 172 360 178 400Z" fill="#c48a63"/>
+          <path d="M98 330 L84 400" stroke="#f5f1ee" stroke-width="6" stroke-linecap="round"/>
+          <ellipse cx="130" cy="226" rx="58" ry="72" fill="#c48a63" transform="rotate(-8 130 226)"/>
+          <path d="M72 222 C64 150 110 118 152 126 C180 132 196 156 192 188 C172 160 142 150 118 160 C96 172 84 198 72 222Z" fill="#2e1c18"/>
+          <path d="M78 200 C64 262 70 322 94 364 C88 302 90 250 98 210Z" fill="#3a2420"/>
+          <path d="M104 222 q8 -7 16 0 M144 216 q8 -7 16 0" stroke="#2e1c18" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+          <path d="M102 208 q9 -5 18 -2 M143 202 q9 -5 18 -1" stroke="#2e1c18" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <circle cx="106" cy="246" r="8" fill="#e48a96" opacity=".45"/><circle cx="162" cy="240" r="8" fill="#e48a96" opacity=".45"/>
+          <path d="M133 236 q-3 9 3 12" stroke="#9e6a4a" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <circle cx="129" cy="248" r="1.8" fill="#eceaf0"/>
+          <path d="M116 264 Q136 280 156 260 Q136 268 116 264Z" fill="#fff" stroke="#a24d5a" stroke-width="1.6" stroke-linejoin="round"/>
+
+          <!-- ele -->
+          <path d="M206 400 C212 340 238 320 280 314 L332 314 C366 324 386 356 392 400Z" fill="#23508a"/>
+          <path d="M268 316 L290 346 L304 316Z M304 316 L318 346 L340 318Z" fill="#1b4377"/>
+          <path d="M264 282 h40 v38 c-12 8 -28 8 -40 0z" fill="#94603f"/>
+          <ellipse cx="342" cy="226" rx="8" ry="12" fill="#9a6646"/>
+          <ellipse cx="282" cy="224" rx="62" ry="74" fill="#a8714f" transform="rotate(6 282 224)"/>
+          <path d="M232 242 C234 286 258 302 284 302 C310 302 332 286 336 242 C326 264 308 270 284 270 C260 270 242 264 232 242Z" fill="#2b1d18"/>
+          <path d="M260 256 Q284 246 308 256 Q284 261 260 256Z" fill="#2b1d18"/>
+          <path d="M266 268 Q284 280 302 268 Q284 273 266 268Z" fill="#fff"/>
+          <path d="M250 214 q8 -6 16 0 M296 214 q8 -6 16 0" stroke="#2b1d18" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <g fill="rgba(255,255,255,.18)" stroke="#3b2b25" stroke-width="4"><circle cx="258" cy="212" r="18"/><circle cx="304" cy="212" r="18"/></g>
+          <path d="M276 209 q5 -4 10 0 M322 208 L340 216" stroke="#3b2b25" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M240 186 q14 -6 28 -2 M290 184 q14 -4 28 2" stroke="#2b1d18" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M214 184 C212 118 258 94 300 98 C344 102 354 148 352 190 C322 176 250 174 214 184Z" fill="#8ca2ba"/>
+          <path d="M282 100 C276 130 278 160 284 178 M316 104 C330 128 336 156 334 180" stroke="#7b91aa" stroke-width="2" fill="none"/>
+          <circle cx="292" cy="100" r="5" fill="#7389a3"/>
+          <circle cx="314" cy="140" r="7" fill="#2f3f55"/>
+          <path d="M216 186 C196 176 172 170 160 174 C168 190 200 200 230 196Z" fill="#7a90aa"/>
+
+          <g class="beat"><path d="M186 82 C186 74 196 72 198 80 C200 72 210 74 210 82 C210 90 198 96 198 100 C198 96 186 90 186 82Z" fill="#d6687f"/></g>
+        </g>
+      </svg>
+    <p>Meu lugar favorito no mundo: do seu lado.</p>
+  </div>
+
+  <div class="paper">
+    <p>Se um dia eu errar, quero que você saiba que eu vou continuar tentando.</p>
+    <p class="small">Porque você vale cada tentativa.</p>
+  </div>
+
+  <div class="paper">
+    <p>Quero ser mais paciente, mais presente, mais cuidadoso.</p>
+    <p class="small">E é você que me dá vontade de tentar todo dia.</p>
+  </div>
+
+  <div class="paper">
+    <p>Você me faz querer ser um homem melhor.</p>
+    <p class="small">Não pra te impressionar, mas porque você merece o melhor de mim.</p>
+  </div>
+
+  <div class="paper photo">
+    <svg class="art" viewBox="0 0 400 380" role="img" aria-label="Ilustração de Geferson e Geovanna lado a lado, sorrindo, num jardim florido, com um coração entre os dois">
+        <defs>
+          <clipPath id="arch"><path d="M0 380V180A200 180 0 0 1 400 180V380Z"/></clipPath>
+          <clipPath id="brim"><ellipse cx="140" cy="165" rx="74" ry="15"/></clipPath>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde8ea"/><stop offset="1" stop-color="#f5cdd4"/></linearGradient>
+        </defs>
+        <g clip-path="url(#arch)">
+          <rect width="400" height="380" fill="url(#sky)"/>
+          <circle cx="330" cy="92" r="30" fill="#fff5ec" opacity=".85"/>
+          <g fill="#94c09a"><circle cx="20" cy="250" r="42"/><circle cx="80" cy="236" r="34"/><circle cx="330" cy="240" r="38"/><circle cx="392" cy="228" r="40"/></g>
+          <g fill="#7fae86"><circle cx="52" cy="258" r="30"/><circle cx="362" cy="256" r="30"/></g>
+          <g fill="#e5839a"><circle cx="30" cy="222" r="5"/><circle cx="70" cy="214" r="4"/><circle cx="96" cy="232" r="5"/><circle cx="316" cy="214" r="5"/><circle cx="350" cy="226" r="4"/><circle cx="384" cy="206" r="5"/></g>
+          <g fill="#f6b9c6"><circle cx="12" cy="238" r="4"/><circle cx="58" cy="240" r="3"/><circle cx="338" cy="250" r="4"/><circle cx="372" cy="238" r="3"/></g>
+          <path d="M0 272 Q120 240 220 258 T400 248 V380 H0Z" fill="#a8cf9e"/>
+
+          <!-- ela -->
+          <path d="M218 190 C214 140 240 132 262 132 C292 132 312 148 308 200 C318 260 330 320 322 380 L206 380 C198 320 208 250 218 190Z" fill="#2e1c18"/>
+          <path d="M196 380 C198 322 214 296 240 290 L284 290 C310 296 326 322 328 380Z" fill="#c48a63"/>
+          <path d="M248 234 h28 v46 c-8 6 -20 6 -28 0z" fill="#b67b55"/>
+          <path d="M214 380 C214 346 222 332 228 322 L296 322 C302 332 310 346 310 380Z" fill="#231c20"/>
+          <path d="M240 324 L254 262 M284 324 L270 262" stroke="#231c20" stroke-width="3" stroke-linecap="round"/>
+          <path d="M250 268 Q262 284 274 268" stroke="#e6e6ee" stroke-width="1.4" fill="none"/>
+          <path d="M262 290 l-4 -4 a2.4 2.4 0 0 1 4 -3 a2.4 2.4 0 0 1 4 3z" fill="#e6e6ee"/>
+          <ellipse cx="262" cy="196" rx="32" ry="39" fill="#c48a63"/>
+          <path d="M228 198 C222 150 250 146 264 150 C286 150 304 164 298 206 C292 180 280 168 264 164 C250 172 238 182 228 198Z" fill="#2e1c18"/>
+          <path d="M228 196 C216 250 212 300 222 346 C234 300 232 250 236 206Z M298 200 C312 250 316 300 306 346 C296 300 294 250 290 208Z" fill="#3a2420"/>
+          <path d="M244 196 q6 -6 12 0 M268 196 q6 -6 12 0" stroke="#2e1c18" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          <path d="M243 186 q7 -4 14 -1 M267 185 q7 -3 14 1" stroke="#2e1c18" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <circle cx="244" cy="212" r="6" fill="#e48a96" opacity=".45"/><circle cx="280" cy="212" r="6" fill="#e48a96" opacity=".45"/>
+          <path d="M250 216 Q262 230 274 216 Q262 222 250 216Z" fill="#fff" stroke="#a24d5a" stroke-width="1.4" stroke-linejoin="round"/>
+          <circle cx="230" cy="212" r="2" fill="#e6e6ee"/><circle cx="294" cy="212" r="2" fill="#e6e6ee"/>
+
+          <!-- ele -->
+          <path d="M56 380 C60 318 82 290 112 282 L168 282 C198 290 220 318 224 380Z" fill="#2b2327"/>
+          <path d="M180 330 l5 -8 l3 5 l5 -8" stroke="#f3eef0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M124 238 h32 v48 c-10 8 -22 8 -32 0z" fill="#94603f"/>
+          <ellipse cx="104" cy="206" rx="6" ry="9" fill="#9a6646"/><ellipse cx="176" cy="206" rx="6" ry="9" fill="#9a6646"/>
+          <ellipse cx="140" cy="202" rx="36" ry="42" fill="#a8714f"/>
+          <path d="M106 208 C108 242 124 254 140 254 C156 254 172 242 174 208 C166 224 156 228 140 228 C124 228 114 224 106 208Z" fill="#2b1d18"/>
+          <path d="M124 222 Q140 213 156 222 Q140 226 124 222Z" fill="#2b1d18"/>
+          <path d="M127 228 Q140 241 153 228 Q140 233 127 228Z" fill="#fff"/>
+          <path d="M118 200 q6 -5 12 0 M150 200 q6 -5 12 0" stroke="#2b1d18" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          <g fill="rgba(255,255,255,.18)" stroke="#3b2b25" stroke-width="3"><rect x="111" y="189" width="26" height="19" rx="7"/><rect x="143" y="189" width="26" height="19" rx="7"/></g>
+          <path d="M137 196 h6" stroke="#3b2b25" stroke-width="3"/>
+          <path d="M112 184 q12 -5 24 -1 M144 183 q12 -4 24 1" stroke="#2b1d18" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+          <ellipse cx="140" cy="165" rx="74" ry="15" fill="#e2794e"/>
+          <g clip-path="url(#brim)" fill="#3f8f86"><ellipse cx="86" cy="170" rx="12" ry="4" transform="rotate(-20 86 170)"/><ellipse cx="118" cy="174" rx="10" ry="3.5" transform="rotate(15 118 174)"/><ellipse cx="164" cy="174" rx="11" ry="3.5" transform="rotate(-12 164 174)"/><ellipse cx="196" cy="168" rx="12" ry="4" transform="rotate(22 196 168)"/><circle cx="100" cy="162" r="3" fill="#f4e2c8"/><circle cx="180" cy="162" r="3" fill="#f4e2c8"/><circle cx="140" cy="176" r="3" fill="#f4e2c8"/></g>
+          <ellipse cx="140" cy="165" rx="74" ry="15" fill="none" stroke="#c79c62" stroke-width="4"/>
+          <path d="M104 164 C102 120 178 120 176 164 C164 158 116 158 104 164Z" fill="#d8b27c"/>
+          <path d="M106 154 C126 148 154 148 174 154" stroke="#bf955c" stroke-width="2" fill="none" stroke-dasharray="3 4"/>
+          <circle cx="140" cy="138" r="10" fill="#c8423a" stroke="#fff" stroke-width="2"/>
+          <path d="M84 172 Q98 232 136 264 M196 172 Q182 232 144 264" stroke="#2b1d18" stroke-width="1.6" fill="none"/>
+          <circle cx="140" cy="268" r="5" fill="#b8743f"/>
+
+          <g class="beat"><path d="M189 110 C189 102 199 100 201 108 C203 100 213 102 213 110 C213 118 201 124 201 128 C201 124 189 118 189 110Z" fill="#d6687f"/></g>
+        </g>
+        <path d="M2 380V180A198 178 0 0 1 398 180V380" fill="none" stroke="none" stroke-width="2"/>
+      </svg>
+    <p>Desde 4 de junho, os meus dias têm o seu nome.</p>
+  </div>
+
+  <div class="paper">
+    <p>Antes de você, eu achava que estava tudo bem.</p>
+    <p class="small">Depois de você, eu descobri o que é estar feliz de verdade.</p>
+  </div>
+
+  <div class="paper">
+    <p>Tem coisas que eu nem sempre consigo dizer em voz alta.</p>
+    <p class="small">Então escrevi aqui, um bilhete de cada vez.</p>
+  </div>
+
+  <div class="paper">
+    <p>Arrasta os bilhetes pro lado.</p>
+    <p class="small">Tem um monte de coisa que eu queria te dizer embaixo deles.</p>
+  </div>
+</main>
+
+<nav class="bottom" aria-label="Ações">
+  <button type="button" id="reset" hidden>Ler de novo</button>
+  <a href="./" id="back">Voltar para a primeira parte</a>
+</nav>
+
+<script>
+(() => {
+  const papers = [...document.querySelectorAll('.paper')];
+  let z = papers.length + 1;
+  const rand = (a, b) => a + Math.random() * (b - a);
+  function place(p, i) {
+    p.dataset.x = 0; p.dataset.y = 0;
+    p.dataset.r = i === 0 ? 0 : rand(-7, 7).toFixed(1);
+    p.style.zIndex = i + 1;
+    apply(p);
+  }
+  function apply(p) {
+    p.style.transform = `translate(calc(-50% + ${p.dataset.x}px), calc(-50% + ${p.dataset.y}px)) rotate(${p.dataset.r}deg)`;
+  }
+  papers.forEach(place);
+
+  const reset = document.getElementById('reset');
+  let moved = new Set();
+
+  papers.forEach((p, i) => {
+    if (p.classList.contains('heart')) return;
+    let sx, sy, ox, oy, id = null;
+    p.addEventListener('pointerdown', e => {
+      id = e.pointerId; p.setPointerCapture(id);
+      sx = e.clientX; sy = e.clientY; ox = +p.dataset.x; oy = +p.dataset.y;
+      p.style.zIndex = ++z; p.classList.add('dragging');
+    });
+    p.addEventListener('pointermove', e => {
+      if (e.pointerId !== id) return;
+      p.dataset.x = ox + e.clientX - sx; p.dataset.y = oy + e.clientY - sy;
+      p.dataset.r = (+p.dataset.r + (e.movementX || 0) * 0.04).toFixed(2);
+      apply(p);
+    });
+    const end = e => {
+      if (e.pointerId !== id) return;
+      id = null; p.classList.remove('dragging');
+      if (Math.hypot(+p.dataset.x, +p.dataset.y) > 80) moved.add(i); else moved.delete(i);
+      reset.hidden = moved.size < papers.length - 1;
+    };
+    p.addEventListener('pointerup', end);
+    p.addEventListener('pointercancel', end);
+  });
+
+  reset.addEventListener('click', () => {
+    moved.clear(); reset.hidden = true; z = papers.length + 1;
+    papers.forEach(place);
+  });
+})();
+</script>
+</body>
+</html>
