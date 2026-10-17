@@ -127,6 +127,25 @@ main { position: relative; z-index: 1; max-width: 560px; margin: 0 auto; padding
 @media (prefers-reduced-motion: reduce) { .beat { animation: none; } }
 .note .locked { font-family: var(--body); font-size: 14px; color: var(--muted); text-align: center; }
 
+/* Fundo decorado */
+.bg-deco { position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(38rem 30rem at 8% 6%, var(--blush), transparent 70%),
+    radial-gradient(34rem 28rem at 96% 42%, var(--blush), transparent 70%),
+    radial-gradient(30rem 26rem at 10% 92%, var(--blush), transparent 70%);
+  opacity: .75; }
+.bg-deco::after { content: ""; position: absolute; inset: 0; background: var(--line); opacity: .55;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M20 26c0-5 6-6 7-1 1-5 7-4 7 1 0 5-7 8-7 11 0-3-7-6-7-11z' fill='none' stroke='black' stroke-width='1.2'/%3E%3Cpath d='M82 84c0-4 5-5 6-1 1-4 6-3 6 1 0 4-6 7-6 9 0-2-6-5-6-9z' fill='black'/%3E%3Ccircle cx='96' cy='22' r='1.6' fill='black'/%3E%3Ccircle cx='34' cy='96' r='1.4' fill='black'/%3E%3C/svg%3E") 0 0 / 120px 120px;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M20 26c0-5 6-6 7-1 1-5 7-4 7 1 0 5-7 8-7 11 0-3-7-6-7-11z' fill='none' stroke='black' stroke-width='1.2'/%3E%3Cpath d='M82 84c0-4 5-5 6-1 1-4 6-3 6 1 0 4-6 7-6 9 0-2-6-5-6-9z' fill='black'/%3E%3Ccircle cx='96' cy='22' r='1.6' fill='black'/%3E%3Ccircle cx='34' cy='96' r='1.4' fill='black'/%3E%3C/svg%3E") 0 0 / 120px 120px; }
+
+/* Polaroid */
+.us { display: flex; justify-content: center; }
+.snapshot { margin: 0; width: 100%; max-width: 340px; background: var(--paper); border: 1px solid var(--line);
+  border-radius: 6px; padding: 12px 12px 16px; display: flex; flex-direction: column; gap: 12px;
+  transform: rotate(-2.5deg); box-shadow: 0 22px 44px -26px rgba(120, 50, 70, .45); }
+.scene2 { width: 100%; height: auto; display: block; border-radius: 4px; }
+.snapshot figcaption { font-family: var(--display); font-style: italic; font-size: 20px; text-align: center; color: var(--ink); text-wrap: balance; }
+
 footer { text-align: center; color: var(--muted); font-size: 13px; }
 
 @media (prefers-reduced-motion: reduce) { .card { transition: none; } #petals { display: none; } }
@@ -134,6 +153,7 @@ footer { text-align: center; color: var(--muted); font-size: 13px; }
 </head>
 <body>
 
+<div class="bg-deco" aria-hidden="true"></div>
 <canvas id="petals" aria-hidden="true"></canvas>
 <main>
   <header class="hero">
@@ -215,6 +235,64 @@ footer { text-align: center; color: var(--muted); font-size: 13px; }
       <div class="unit"><b id="u-s">0</b><span>segundos</span></div>
     </div>
     <p class="since">desde <em id="since-date"></em>, e contando.</p>
+  </section>
+
+  <section class="us" aria-label="Nós dois">
+    <figure class="snapshot">
+      <svg class="scene2" viewBox="0 0 400 400" role="img" aria-label="Ilustração de Geovanna e Geferson numa selfie de rosto colado, sorrindo, numa rua ensolarada">
+        <defs>
+          <clipPath id="frame2"><rect width="400" height="400" rx="4"/></clipPath>
+          <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde9e2"/><stop offset="1" stop-color="#f8d6d2"/></linearGradient>
+        </defs>
+        <g clip-path="url(#frame2)">
+          <rect width="400" height="400" fill="url(#sky2)"/>
+          <circle cx="360" cy="40" r="46" fill="#fff4e4" opacity=".9"/>
+          <rect x="0" y="58" width="400" height="150" fill="#f2c4a6"/>
+          <rect x="0" y="52" width="400" height="10" fill="#e6ad8c"/>
+          <g fill="#e7b190"><rect x="18" y="82" width="34" height="44" rx="3"/><rect x="72" y="82" width="34" height="44" rx="3"/><rect x="300" y="82" width="34" height="44" rx="3"/><rect x="354" y="82" width="34" height="44" rx="3"/></g>
+          <rect x="0" y="200" width="400" height="200" fill="#ece1dc"/>
+          <rect x="0" y="200" width="400" height="6" fill="#dccdc7"/>
+          <g fill="#94c09a"><circle cx="384" cy="196" r="26"/><circle cx="364" cy="210" r="18"/></g>
+          <g fill="#e5839a"><circle cx="376" cy="184" r="4"/><circle cx="392" cy="204" r="3"/><circle cx="360" cy="200" r="3"/></g>
+
+          <!-- ela -->
+          <path d="M40 400 C18 300 28 170 70 125 C100 95 168 95 192 132 C204 162 198 220 192 262 L174 400Z" fill="#2e1c18"/>
+          <path d="M34 400 C44 350 78 330 120 326 C152 330 172 360 178 400Z" fill="#c48a63"/>
+          <path d="M98 330 L84 400" stroke="#f5f1ee" stroke-width="6" stroke-linecap="round"/>
+          <ellipse cx="130" cy="226" rx="58" ry="72" fill="#c48a63" transform="rotate(-8 130 226)"/>
+          <path d="M72 222 C64 150 110 118 152 126 C180 132 196 156 192 188 C172 160 142 150 118 160 C96 172 84 198 72 222Z" fill="#2e1c18"/>
+          <path d="M78 200 C64 262 70 322 94 364 C88 302 90 250 98 210Z" fill="#3a2420"/>
+          <path d="M104 222 q8 -7 16 0 M144 216 q8 -7 16 0" stroke="#2e1c18" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+          <path d="M102 208 q9 -5 18 -2 M143 202 q9 -5 18 -1" stroke="#2e1c18" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <circle cx="106" cy="246" r="8" fill="#e48a96" opacity=".45"/><circle cx="162" cy="240" r="8" fill="#e48a96" opacity=".45"/>
+          <path d="M133 236 q-3 9 3 12" stroke="#9e6a4a" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <circle cx="129" cy="248" r="1.8" fill="#eceaf0"/>
+          <path d="M116 264 Q136 280 156 260 Q136 268 116 264Z" fill="#fff" stroke="#a24d5a" stroke-width="1.6" stroke-linejoin="round"/>
+
+          <!-- ele -->
+          <path d="M206 400 C212 340 238 320 280 314 L332 314 C366 324 386 356 392 400Z" fill="#23508a"/>
+          <path d="M268 316 L290 346 L304 316Z M304 316 L318 346 L340 318Z" fill="#1b4377"/>
+          <path d="M264 282 h40 v38 c-12 8 -28 8 -40 0z" fill="#94603f"/>
+          <ellipse cx="342" cy="226" rx="8" ry="12" fill="#9a6646"/>
+          <ellipse cx="282" cy="224" rx="62" ry="74" fill="#a8714f" transform="rotate(6 282 224)"/>
+          <path d="M232 242 C234 286 258 302 284 302 C310 302 332 286 336 242 C326 264 308 270 284 270 C260 270 242 264 232 242Z" fill="#2b1d18"/>
+          <path d="M260 256 Q284 246 308 256 Q284 261 260 256Z" fill="#2b1d18"/>
+          <path d="M266 268 Q284 280 302 268 Q284 273 266 268Z" fill="#fff"/>
+          <path d="M250 214 q8 -6 16 0 M296 214 q8 -6 16 0" stroke="#2b1d18" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <g fill="rgba(255,255,255,.18)" stroke="#3b2b25" stroke-width="4"><circle cx="258" cy="212" r="18"/><circle cx="304" cy="212" r="18"/></g>
+          <path d="M276 209 q5 -4 10 0 M322 208 L340 216" stroke="#3b2b25" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M240 186 q14 -6 28 -2 M290 184 q14 -4 28 2" stroke="#2b1d18" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M214 184 C212 118 258 94 300 98 C344 102 354 148 352 190 C322 176 250 174 214 184Z" fill="#8ca2ba"/>
+          <path d="M282 100 C276 130 278 160 284 178 M316 104 C330 128 336 156 334 180" stroke="#7b91aa" stroke-width="2" fill="none"/>
+          <circle cx="292" cy="100" r="5" fill="#7389a3"/>
+          <circle cx="314" cy="140" r="7" fill="#2f3f55"/>
+          <path d="M216 186 C196 176 172 170 160 174 C168 190 200 200 230 196Z" fill="#7a90aa"/>
+
+          <g class="beat"><path d="M186 82 C186 74 196 72 198 80 C200 72 210 74 210 82 C210 90 198 96 198 100 C198 96 186 90 186 82Z" fill="#d6687f"/></g>
+        </g>
+      </svg>
+      <figcaption>Do jeito que eu mais gosto: pertinho de você.</figcaption>
+    </figure>
   </section>
 
   <section class="reasons" aria-labelledby="r-title">
