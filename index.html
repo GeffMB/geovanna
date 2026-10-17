@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important} body{margin:0}</style>
+<title>Para Geovanna</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;1,400;1,500&family=Karla:wght@400;500;600&display=swap">
+<style>
+/* Layout: uma coluna estreita como uma carta — nome, contador, baralho de motivos, bilhete final */
+:root {
+  --bg: #fbf3f2;
+  --paper: #fffafa;
+  --ink: #4a2c33;
+  --muted: #8e6a72;
+  --rose: #c96f82;
+  --blush: #f1d3d8;
+  --line: #ead6da;
+  --petal: rgba(214, 128, 148, .55);
+  --display: "Cormorant", "Cormorant Garamond", Georgia, serif;
+  --body: "Karla", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #23171b; --paper: #2e1f24; --ink: #f6e4e7; --muted: #c4a3ab;
+    --rose: #e79aab; --blush: #4a2f37; --line: #46313a; --petal: rgba(231, 154, 171, .35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #23171b; --paper: #2e1f24; --ink: #f6e4e7; --muted: #c4a3ab;
+  --rose: #e79aab; --blush: #4a2f37; --line: #46313a; --petal: rgba(231, 154, 171, .35);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+#petals { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+main { position: relative; z-index: 1; max-width: 560px; margin: 0 auto; padding-block: 56px 72px; display: flex; flex-direction: column; gap: 64px; }
+
+.eyebrow { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+
+/* Hero */
+.hero { text-align: center; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.hero h1 {
+  font-family: var(--display); font-style: italic; font-weight: 400;
+  font-size: clamp(64px, 18vw, 108px); line-height: .95; margin: 0; letter-spacing: -.01em;
+  color: var(--rose);
+}
+.hero p { margin: 0; font-family: var(--display); font-size: 22px; color: var(--muted); max-width: 30ch; text-wrap: balance; }
+
+/* Contador */
+.counter { display: flex; flex-direction: column; gap: 18px; text-align: center; }
+.counter h2, .reasons h2 { font-family: var(--display); font-weight: 500; font-size: 30px; margin: 0; text-wrap: balance; }
+.units { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.units.no-years { grid-template-columns: repeat(6, 1fr); }
+.units.no-years .unit { grid-column: span 2; }
+.units.no-years .unit:nth-last-child(-n+2) { grid-column: span 3; }
+.unit { background: var(--paper); padding: 18px 8px 14px; display: flex; flex-direction: column; gap: 2px; }
+.unit b { font-family: var(--display); font-weight: 500; font-size: 40px; line-height: 1; font-variant-numeric: tabular-nums lining-nums; }
+.unit span { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.since { margin: 0; color: var(--muted); font-size: 15px; }
+.since em { font-family: var(--display); font-size: 19px; color: var(--ink); }
+
+/* Motivos */
+.reasons { display: flex; flex-direction: column; gap: 20px; align-items: center; text-align: center; }
+.reasons > p { margin: 0; color: var(--muted); max-width: 40ch; }
+.deck { position: relative; width: 100%; max-width: 380px; aspect-ratio: 4 / 5; perspective: 1200px; }
+.deck::before, .deck::after {
+  content: ""; position: absolute; inset: 0; border-radius: 18px; background: var(--paper);
+  border: 1px solid var(--line);
+}
+.deck::before { transform: rotate(-4deg) translateY(6px); }
+.deck::after { transform: rotate(3deg) translateY(3px); }
+.card {
+  position: absolute; inset: 0; z-index: 2; border: 0; padding: 0; background: none; cursor: pointer;
+  transform-style: preserve-3d; transition: transform .7s cubic-bezier(.2,.7,.2,1);
+  font: inherit; color: inherit; border-radius: 18px;
+}
+.card.flipped { transform: rotateY(180deg); }
+.card:focus-visible { outline: 2px solid var(--rose); outline-offset: 6px; }
+.face {
+  position: absolute; inset: 0; border-radius: 18px; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  background: var(--paper); border: 1px solid var(--line);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 32px 28px;
+  box-shadow: 0 18px 40px -24px rgba(120, 50, 70, .35);
+}
+.front { background: linear-gradient(160deg, var(--paper), var(--blush)); }
+.front .num { font-family: var(--display); font-style: italic; font-size: 92px; line-height: 1; color: var(--rose); }
+.front .hint { font-size: 13px; color: var(--muted); letter-spacing: .08em; }
+.back { transform: rotateY(180deg); }
+.back p { margin: 0; font-family: var(--display); font-size: clamp(24px, 6.4vw, 30px); line-height: 1.25; text-wrap: balance; }
+.heart { width: 22px; height: 22px; color: var(--rose); }
+
+.controls { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.next {
+  font: 600 15px var(--body); letter-spacing: .02em; color: var(--paper); background: var(--rose);
+  border: 0; border-radius: 999px; padding: 12px 26px; cursor: pointer; transition: transform .2s, opacity .2s;
+}
+.next:hover { transform: translateY(-1px); }
+.next:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.next:disabled { opacity: .4; cursor: default; transform: none; }
+.dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; max-width: 300px; }
+.dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line); transition: background .3s; }
+.dots i.on { background: var(--rose); }
+.progress { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* Bilhete final */
+.note {
+  background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 32px 28px;
+  display: flex; flex-direction: column; gap: 14px; text-align: left;
+}
+.note p { margin: 0; font-family: var(--display); font-size: 22px; line-height: 1.4; }
+.note .sign { font-style: italic; color: var(--rose); align-self: flex-end; font-size: 26px; }
+.portrait { margin: 18px 0 0; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.scene { width: 100%; max-width: 360px; height: auto; }
+.portrait figcaption { font-family: var(--display); font-style: italic; font-size: 19px; color: var(--muted); text-align: center; text-wrap: balance; }
+.beat { transform-box: fill-box; transform-origin: center; animation: beat 1.6s ease-in-out infinite; }
+@keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.18); } 30% { transform: scale(1); } 45% { transform: scale(1.12); } }
+@media (prefers-reduced-motion: reduce) { .beat { animation: none; } }
+.note .locked { font-family: var(--body); font-size: 14px; color: var(--muted); text-align: center; }
+
+footer { text-align: center; color: var(--muted); font-size: 13px; }
+
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } #petals { display: none; } }
+</style>
+</head>
+<body>
+
+<canvas id="petals" aria-hidden="true"></canvas>
+<main>
+  <header class="hero">
+    <span class="eyebrow">Um lugar feito só para você</span>
+    <h1>Geovanna</h1>
+    <p>Abre com calma. Cada pedacinho daqui foi pensado em você.</p>
+    <figure class="portrait">
+      <svg class="scene" viewBox="0 0 400 380" role="img" aria-label="Ilustração de Geferson e Geovanna lado a lado, sorrindo, num jardim florido, com um coração entre os dois">
+        <defs>
+          <clipPath id="arch"><path d="M0 380V180A200 180 0 0 1 400 180V380Z"/></clipPath>
+          <clipPath id="brim"><ellipse cx="140" cy="165" rx="74" ry="15"/></clipPath>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde8ea"/><stop offset="1" stop-color="#f5cdd4"/></linearGradient>
+        </defs>
+        <g clip-path="url(#arch)">
+          <rect width="400" height="380" fill="url(#sky)"/>
+          <circle cx="330" cy="92" r="30" fill="#fff5ec" opacity=".85"/>
+          <g fill="#94c09a"><circle cx="20" cy="250" r="42"/><circle cx="80" cy="236" r="34"/><circle cx="330" cy="240" r="38"/><circle cx="392" cy="228" r="40"/></g>
+          <g fill="#7fae86"><circle cx="52" cy="258" r="30"/><circle cx="362" cy="256" r="30"/></g>
+          <g fill="#e5839a"><circle cx="30" cy="222" r="5"/><circle cx="70" cy="214" r="4"/><circle cx="96" cy="232" r="5"/><circle cx="316" cy="214" r="5"/><circle cx="350" cy="226" r="4"/><circle cx="384" cy="206" r="5"/></g>
+          <g fill="#f6b9c6"><circle cx="12" cy="238" r="4"/><circle cx="58" cy="240" r="3"/><circle cx="338" cy="250" r="4"/><circle cx="372" cy="238" r="3"/></g>
+          <path d="M0 272 Q120 240 220 258 T400 248 V380 H0Z" fill="#a8cf9e"/>
+
+          <!-- ela -->
+          <path d="M218 190 C214 140 240 132 262 132 C292 132 312 148 308 200 C318 260 330 320 322 380 L206 380 C198 320 208 250 218 190Z" fill="#2e1c18"/>
+          <path d="M196 380 C198 322 214 296 240 290 L284 290 C310 296 326 322 328 380Z" fill="#c48a63"/>
+          <path d="M248 234 h28 v46 c-8 6 -20 6 -28 0z" fill="#b67b55"/>
+          <path d="M214 380 C214 346 222 332 228 322 L296 322 C302 332 310 346 310 380Z" fill="#231c20"/>
+          <path d="M240 324 L254 262 M284 324 L270 262" stroke="#231c20" stroke-width="3" stroke-linecap="round"/>
+          <path d="M250 268 Q262 284 274 268" stroke="#e6e6ee" stroke-width="1.4" fill="none"/>
+          <path d="M262 290 l-4 -4 a2.4 2.4 0 0 1 4 -3 a2.4 2.4 0 0 1 4 3z" fill="#e6e6ee"/>
+          <ellipse cx="262" cy="196" rx="32" ry="39" fill="#c48a63"/>
+          <path d="M228 198 C222 150 250 146 264 150 C286 150 304 164 298 206 C292 180 280 168 264 164 C250 172 238 182 228 198Z" fill="#2e1c18"/>
+          <path d="M228 196 C216 250 212 300 222 346 C234 300 232 250 236 206Z M298 200 C312 250 316 300 306 346 C296 300 294 250 290 208Z" fill="#3a2420"/>
+          <path d="M244 196 q6 -6 12 0 M268 196 q6 -6 12 0" stroke="#2e1c18" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          <path d="M243 186 q7 -4 14 -1 M267 185 q7 -3 14 1" stroke="#2e1c18" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <circle cx="244" cy="212" r="6" fill="#e48a96" opacity=".45"/><circle cx="280" cy="212" r="6" fill="#e48a96" opacity=".45"/>
+          <path d="M250 216 Q262 230 274 216 Q262 222 250 216Z" fill="#fff" stroke="#a24d5a" stroke-width="1.4" stroke-linejoin="round"/>
+          <circle cx="230" cy="212" r="2" fill="#e6e6ee"/><circle cx="294" cy="212" r="2" fill="#e6e6ee"/>
+
+          <!-- ele -->
+          <path d="M56 380 C60 318 82 290 112 282 L168 282 C198 290 220 318 224 380Z" fill="#2b2327"/>
+          <path d="M180 330 l5 -8 l3 5 l5 -8" stroke="#f3eef0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M124 238 h32 v48 c-10 8 -22 8 -32 0z" fill="#94603f"/>
+          <ellipse cx="104" cy="206" rx="6" ry="9" fill="#9a6646"/><ellipse cx="176" cy="206" rx="6" ry="9" fill="#9a6646"/>
+          <ellipse cx="140" cy="202" rx="36" ry="42" fill="#a8714f"/>
+          <path d="M106 208 C108 242 124 254 140 254 C156 254 172 242 174 208 C166 224 156 228 140 228 C124 228 114 224 106 208Z" fill="#2b1d18"/>
+          <path d="M124 222 Q140 213 156 222 Q140 226 124 222Z" fill="#2b1d18"/>
+          <path d="M127 228 Q140 241 153 228 Q140 233 127 228Z" fill="#fff"/>
+          <path d="M118 200 q6 -5 12 0 M150 200 q6 -5 12 0" stroke="#2b1d18" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          <g fill="rgba(255,255,255,.18)" stroke="#3b2b25" stroke-width="3"><rect x="111" y="189" width="26" height="19" rx="7"/><rect x="143" y="189" width="26" height="19" rx="7"/></g>
+          <path d="M137 196 h6" stroke="#3b2b25" stroke-width="3"/>
+          <path d="M112 184 q12 -5 24 -1 M144 183 q12 -4 24 1" stroke="#2b1d18" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+          <ellipse cx="140" cy="165" rx="74" ry="15" fill="#e2794e"/>
+          <g clip-path="url(#brim)" fill="#3f8f86"><ellipse cx="86" cy="170" rx="12" ry="4" transform="rotate(-20 86 170)"/><ellipse cx="118" cy="174" rx="10" ry="3.5" transform="rotate(15 118 174)"/><ellipse cx="164" cy="174" rx="11" ry="3.5" transform="rotate(-12 164 174)"/><ellipse cx="196" cy="168" rx="12" ry="4" transform="rotate(22 196 168)"/><circle cx="100" cy="162" r="3" fill="#f4e2c8"/><circle cx="180" cy="162" r="3" fill="#f4e2c8"/><circle cx="140" cy="176" r="3" fill="#f4e2c8"/></g>
+          <ellipse cx="140" cy="165" rx="74" ry="15" fill="none" stroke="#c79c62" stroke-width="4"/>
+          <path d="M104 164 C102 120 178 120 176 164 C164 158 116 158 104 164Z" fill="#d8b27c"/>
+          <path d="M106 154 C126 148 154 148 174 154" stroke="#bf955c" stroke-width="2" fill="none" stroke-dasharray="3 4"/>
+          <circle cx="140" cy="138" r="10" fill="#c8423a" stroke="#fff" stroke-width="2"/>
+          <path d="M84 172 Q98 232 136 264 M196 172 Q182 232 144 264" stroke="#2b1d18" stroke-width="1.6" fill="none"/>
+          <circle cx="140" cy="268" r="5" fill="#b8743f"/>
+
+          <g class="beat"><path d="M189 110 C189 102 199 100 201 108 C203 100 213 102 213 110 C213 118 201 124 201 128 C201 124 189 118 189 110Z" fill="#d6687f"/></g>
+        </g>
+        <path d="M2 380V180A198 178 0 0 1 398 180V380" fill="none" stroke="var(--line)" stroke-width="2"/>
+      </svg>
+      <figcaption>Você e eu. Desde 4 de junho, e pra todos os dias depois.</figcaption>
+    </figure>
+  </header>
+
+  <section class="counter" aria-labelledby="c-title">
+    <span class="eyebrow">O nosso tempo</span>
+    <h2 id="c-title">A gente se conheceu há</h2>
+    <div class="units">
+      <div class="unit" id="unit-y"><b id="u-y">0</b><span>anos</span></div>
+      <div class="unit"><b id="u-mo">0</b><span>meses</span></div>
+      <div class="unit"><b id="u-d">0</b><span>dias</span></div>
+      <div class="unit"><b id="u-h">0</b><span>horas</span></div>
+      <div class="unit"><b id="u-mi">0</b><span>minutos</span></div>
+      <div class="unit"><b id="u-s">0</b><span>segundos</span></div>
+    </div>
+    <p class="since">desde <em id="since-date"></em>, e contando.</p>
+  </section>
+
+  <section class="reasons" aria-labelledby="r-title">
+    <span class="eyebrow">Motivos pelos quais eu te amo</span>
+    <h2 id="r-title">Vira uma carta de cada vez</h2>
+    <p>São <span id="total"></span> motivos. Não são todos, porque todos não caberiam aqui.</p>
+    <div class="deck">
+      <button class="card" id="card" type="button" aria-live="polite">
+        <div class="face front">
+          <span class="eyebrow">Motivo nº</span>
+          <span class="num" id="num">1</span>
+          <span class="hint">toque para ler</span>
+        </div>
+        <div class="face back">
+          <svg class="heart" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.1 4.3 2.4h2c.7-1.3 2.2-2.4 4.3-2.4 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg>
+          <p id="reason"></p>
+        </div>
+      </button>
+    </div>
+    <div class="controls">
+      <button class="next" id="next" type="button">Próximo motivo</button>
+      <div class="dots" id="dots" aria-hidden="true"></div>
+      <span class="progress" id="progress"></span>
+    </div>
+  </section>
+
+  <section class="note" aria-label="Bilhete">
+    <p class="locked" id="locked">Leia todos os motivos para abrir o bilhete.</p>
+    <div id="letter" hidden style="display:flex;flex-direction:column;gap:14px">
+      <p>Se você chegou até aqui, já sabe um pouco do que eu sinto. O resto eu vou continuar te mostrando todos os dias, do jeito mais simples: estando do seu lado.</p>
+      <p>Obrigado por ser você.</p>
+      <p class="sign">Com amor, Geferson</p>
+    </div>
+  </section>
+
+  <footer>feito com carinho, para a Geovanna</footer>
+</main>
+
+<script>
+const START = new Date(2026, 5, 4, 0, 0, 0); // dia em que se conheceram (ano, mês-1, dia)
+const REASONS = [
+  "Seu sorriso, que muda o meu dia de qualquer lugar.",
+  "O jeito que você ri das minhas piadas, até das ruins.",
+  "Porque com você até o silêncio é confortável.",
+  "Seu abraço, que é o meu lugar favorito no mundo.",
+  "A forma como você cuida de quem você ama.",
+  "Porque você me faz querer ser uma pessoa melhor.",
+  "O jeito que você fala o meu nome.",
+  "Porque você acredita em mim até quando eu duvido.",
+  "As conversas que viram madrugada sem a gente perceber.",
+  "Sua coragem, que você nem percebe que tem.",
+  "Porque qualquer plano simples fica especial com você.",
+  "Porque é você. E sempre vai ser você."
+];
+
+/* Contador */
+const months = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+document.getElementById("since-date").textContent = `${START.getDate()} de ${months[START.getMonth()]} de ${START.getFullYear()}`;
+function diff(from, to) {
+  let y = to.getFullYear() - from.getFullYear();
+  let mo = to.getMonth() - from.getMonth();
+  let anchor = new Date(from); anchor.setFullYear(from.getFullYear() + y); anchor.setMonth(from.getMonth() + mo);
+  if (anchor > to) { mo -= 1; anchor = new Date(from); anchor.setFullYear(from.getFullYear() + y); anchor.setMonth(from.getMonth() + mo); }
+  while (mo < 0) { mo += 12; y -= 1; }
+  let rest = Math.max(0, Math.floor((to - anchor) / 1000));
+  const d = Math.floor(rest / 86400); rest %= 86400;
+  const h = Math.floor(rest / 3600); rest %= 3600;
+  return { y, mo, d, h, mi: Math.floor(rest / 60), s: rest % 60 };
+}
+function tick() {
+  const t = diff(START, new Date());
+  for (const k of ["y","mo","d","h","mi","s"]) document.getElementById("u-" + k).textContent = t[k];
+  const noY = t.y === 0;
+  document.getElementById("unit-y").hidden = noY;
+  document.querySelector(".units").classList.toggle("no-years", noY);
+  document.querySelector(".unit:has(#u-mo) span").textContent = t.mo === 1 ? "mês" : "meses";
+  document.querySelector(".unit:has(#u-y) span").textContent = t.y === 1 ? "ano" : "anos";
+}
+tick(); setInterval(tick, 1000);
+
+/* Motivos */
+let i = 0, seen = 0;
+const card = document.getElementById("card"), next = document.getElementById("next");
+const dots = document.getElementById("dots");
+document.getElementById("total").textContent = REASONS.length;
+REASONS.forEach(() => dots.appendChild(document.createElement("i")));
+function render() {
+  document.getElementById("num").textContent = i + 1;
+  document.getElementById("reason").textContent = REASONS[i];
+  document.getElementById("progress").textContent = `${seen} de ${REASONS.length} lidos`;
+  [...dots.children].forEach((d, k) => d.classList.toggle("on", k < seen));
+  card.setAttribute("aria-label", card.classList.contains("flipped") ? REASONS[i] : `Motivo número ${i + 1}, toque para ler`);
+  next.disabled = i === REASONS.length - 1;
+  next.textContent = i === REASONS.length - 1 ? "Esse foi o último (por enquanto)" : "Próximo motivo";
+}
+card.addEventListener("click", () => {
+  card.classList.toggle("flipped");
+  if (card.classList.contains("flipped") && i + 1 > seen) {
+    seen = i + 1;
+    if (seen === REASONS.length) {
+      document.getElementById("locked").hidden = true;
+      document.getElementById("letter").hidden = false;
+    }
+  }
+  render();
+});
+next.addEventListener("click", () => {
+  if (i >= REASONS.length - 1) return;
+  const go = () => { i++; render(); };
+  if (card.classList.contains("flipped")) { card.classList.remove("flipped"); setTimeout(go, 350); } else go();
+});
+render();
+
+/* Pétalas */
+(() => {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const c = document.getElementById("petals"), ctx = c.getContext("2d");
+  let W, H, P = [];
+  const resize = () => { W = c.width = innerWidth * devicePixelRatio; H = c.height = innerHeight * devicePixelRatio; };
+  resize(); addEventListener("resize", resize);
+  const color = () => getComputedStyle(document.documentElement).getPropertyValue("--petal").trim();
+  for (let k = 0; k < 18; k++) P.push({ x: Math.random(), y: Math.random(), r: 5 + Math.random() * 6, v: .0004 + Math.random() * .0006, a: Math.random() * 6.28, s: .01 + Math.random() * .02 });
+  let col = color(); setInterval(() => col = color(), 2000);
+  (function frame() {
+    ctx.clearRect(0, 0, W, H); ctx.fillStyle = col;
+    for (const p of P) {
+      p.y += p.v; p.a += p.s; p.x += Math.sin(p.a) * .0006;
+      if (p.y > 1.05) { p.y = -.05; p.x = Math.random(); }
+      ctx.save(); ctx.translate(p.x * W, p.y * H); ctx.rotate(p.a);
+      ctx.beginPath(); ctx.ellipse(0, 0, p.r * devicePixelRatio, p.r * .55 * devicePixelRatio, 0, 0, 6.283); ctx.fill(); ctx.restore();
+    }
+    requestAnimationFrame(frame);
+  })();
+})();
+</script>
+</body>
+</html>
