@@ -181,14 +181,12 @@ html.layer-open, html.layer-open body { overflow: hidden; }
 .layer2 .paper.red { background: var(--rose); background-image: none; padding: 34px 28px; text-align: center; }
 .layer2 .paper.red p, .layer2 .paper.red .big { color: #fffafa; }
 .layer2 .paper.red .big { font-size: 54px; }
-.layer2 .paper.heart { width: min(300px, calc(100vw - 48px)); aspect-ratio: 1 / .92; padding: 0; background: none; box-shadow: none;
-  align-items: center; justify-content: center; cursor: default; }
-.layer2 .paper.heart svg { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 18px 24px rgba(150, 50, 75, .35)); }
-.layer2 .paper.heart .inside { position: relative; text-align: center; margin-top: -8%; display: flex; flex-direction: column; gap: 2px; }
-.layer2 .paper.heart p, .layer2 .paper.heart .big { color: #fffafa; }
-.layer2 .paper.heart p { font-size: 34px; }
-.layer2 .paper.heart .big { font-size: 40px; }
-.beat-heart { animation: pulse 1.8s ease-in-out infinite; transform-origin: center; }
+.layer2 .paper.finale { width: min(400px, calc(100vw - 24px)); padding: 0; background: none; box-shadow: none; border-radius: 0;
+  cursor: default; align-items: center; gap: 4px; }
+.layer2 .paper.finale .sunset { width: 100%; height: auto; display: block;
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 58%, transparent 100%);
+          mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 58%, transparent 100%); }
+.layer2 .paper.finale p { text-align: center; color: var(--rose); font-size: 30px; font-weight: 700; margin-top: -26px; padding-inline: 12px; }
 @keyframes pulse { 0%,100% { transform: scale(1); } 14% { transform: scale(1.05); } 28% { transform: scale(1); } 42% { transform: scale(1.03); } }
 .layer2 .bottom { position: absolute; left: 0; right: 0; bottom: env(safe-area-inset-bottom, 0px); z-index: 0;
   padding-block: 0 18px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
@@ -196,7 +194,7 @@ html.layer-open, html.layer-open body { overflow: hidden; }
 .layer2 .bottom button { font: 600 14px var(--body); color: var(--rose); background: var(--paper); border: 1px solid var(--line);
   border-radius: 999px; padding: 9px 18px; cursor: pointer; }
 .layer2 .bottom button:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { .beat-heart { animation: none; } .layer2 { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .layer2 { transition: none; } }
 
 footer { text-align: center; color: var(--muted); font-size: 13px; }
 
@@ -391,12 +389,70 @@ footer { text-align: center; color: var(--muted); font-size: 13px; }
     <span class="name">Geovanna</span>
   </div>
   <div id="desk">
-  <div class="paper heart">
-    <svg class="beat-heart" viewBox="0 0 100 92" aria-hidden="true"><path d="M50 90 C 50 90 4 62 4 30 C 4 14 16 4 29 4 C 39 4 46 10 50 18 C 54 10 61 4 71 4 C 84 4 96 14 96 30 C 96 62 50 90 50 90Z" fill="#d6687f"/></svg>
-    <div class="inside">
-      <p>Eu te amo,</p>
-      <span class="big">Geovanna.</span>
-    </div>
+  <div class="paper finale">
+    <svg class="sunset" viewBox="0 0 400 440" role="img" aria-label="Ilustração de Geferson e Geovanna sentados juntos numa cerca da roça, sorrindo, com o pôr do sol atrás">
+      <defs>
+        <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#8fa6c9"/><stop offset=".35" stop-color="#e9b9b6"/><stop offset=".55" stop-color="#f6c08f"/><stop offset=".62" stop-color="#f39a63"/>
+        </linearGradient>
+        <radialGradient id="glow" cx="300" cy="238" r="120" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#fff1c9" stop-opacity=".95"/><stop offset=".35" stop-color="#ffd59a" stop-opacity=".55"/><stop offset="1" stop-color="#ffd59a" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="dirt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9694a"/><stop offset="1" stop-color="#8e4632"/></linearGradient>
+      </defs>
+      <rect width="400" height="440" fill="url(#dusk)"/>
+      <circle cx="300" cy="238" r="120" fill="url(#glow)"/>
+      <circle cx="300" cy="240" r="22" fill="#fff0cf"/>
+      <g fill="#f3a585" opacity=".85"><ellipse cx="250" cy="120" rx="70" ry="9"/><ellipse cx="300" cy="104" rx="46" ry="7"/><ellipse cx="120" cy="140" rx="54" ry="6"/></g>
+      <g fill="#a9b6d6" opacity=".8"><ellipse cx="180" cy="96" rx="60" ry="10"/><ellipse cx="226" cy="88" rx="36" ry="9"/></g>
+      <path d="M0 246 Q70 232 140 242 T290 238 T400 236 V262 H0Z" fill="#9a88a6" opacity=".75"/>
+      <g fill="#3f5546"><circle cx="58" cy="222" r="20"/><circle cx="76" cy="214" r="16"/><circle cx="40" cy="226" r="13"/><rect x="56" y="232" width="4" height="22"/>
+        <circle cx="120" cy="226" r="15"/><circle cx="134" cy="220" r="12"/><rect x="124" y="234" width="3" height="18"/>
+        <circle cx="352" cy="240" r="9"/><circle cx="364" cy="236" r="7"/></g>
+      <path d="M0 252 Q200 244 400 250 V440 H0Z" fill="url(#dirt)"/>
+      <g stroke="#cf8461" stroke-width="2" opacity=".55" fill="none">
+        <path d="M0 270 Q200 262 400 268"/><path d="M0 292 Q200 284 400 290"/><path d="M0 318 Q200 310 400 316"/><path d="M0 348 Q200 340 400 346"/>
+      </g>
+      <g stroke="#e6ebee" stroke-width="5" stroke-linecap="round"><path d="M300 262 V340 M396 258 V340"/><path d="M300 272 H396 M300 292 H396 M300 312 H396 M300 332 H396"/></g>
+      <path d="M150 340 L400 336 L400 352 L150 356Z" fill="#dccbb0"/>
+      <path d="M150 356 L400 352 L400 360 L150 364Z" fill="#b9a688"/>
+      <g stroke="#b9a688" stroke-width="7" stroke-linecap="round"><path d="M370 360 V440 M200 364 V440"/></g>
+
+      <!-- ela -->
+      <path d="M168 248 C160 200 182 176 210 176 C240 176 258 198 254 248 C262 300 268 340 262 372 L164 372 C156 330 160 290 168 248Z" fill="#3a2420"/>
+      <path d="M172 372 C172 330 186 310 210 304 C234 310 250 330 250 372Z" fill="#c48a63"/>
+      <path d="M184 372 C184 340 194 326 212 322 C230 326 240 340 240 372Z" fill="#231c20"/>
+      <path d="M176 372 L256 372 L262 420 L170 420Z" fill="#6f8db8"/>
+      <path d="M190 392 C206 384 230 384 246 392" stroke="#c48a63" stroke-width="12" stroke-linecap="round" fill="none"/>
+      <circle cx="252" cy="396" r="5" fill="#b89be0"/><circle cx="258" cy="391" r="4" fill="#c9aeea"/>
+      <path d="M198 280 h24 v30 c-6 6 -18 6 -24 0z" fill="#b67b55"/>
+      <ellipse cx="210" cy="250" rx="30" ry="36" fill="#c48a63"/>
+      <path d="M180 250 C176 204 202 196 214 200 C234 200 246 214 242 252 C236 228 226 218 212 216 C200 222 188 234 180 250Z" fill="#3a2420"/>
+      <path d="M180 248 C170 290 168 330 176 362 C186 330 186 290 188 258Z" fill="#4a2e26"/>
+      <path d="M196 250 q6 -6 12 0 M216 250 q6 -6 12 0" stroke="#2e1c18" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <circle cx="194" cy="264" r="5" fill="#e48a96" opacity=".45"/><circle cx="230" cy="264" r="5" fill="#e48a96" opacity=".45"/>
+      <path d="M201 268 Q212 280 223 268 Q212 273 201 268Z" fill="#fff" stroke="#a24d5a" stroke-width="1.3" stroke-linejoin="round"/>
+      <circle cx="182" cy="262" r="2" fill="#e6e6ee"/>
+
+      <!-- ele -->
+      <path d="M-10 440 C-6 372 30 344 80 338 L120 338 C160 346 180 380 184 440Z" fill="#9aa1a8"/>
+      <g transform="translate(120 400)"><circle r="12" fill="#2f3438"/><circle r="5" fill="#9aa1a8"/></g>
+      <path d="M78 312 h34 v32 c-10 7 -24 7 -34 0z" fill="#94603f"/>
+      <ellipse cx="150" cy="282" rx="7" ry="11" fill="#9a6646"/>
+      <ellipse cx="96" cy="280" rx="54" ry="62" fill="#a8714f"/>
+      <path d="M50 290 C52 334 72 348 96 348 C120 348 140 334 144 290 C134 310 118 316 96 316 C74 316 58 310 50 290Z" fill="#2b1d18"/>
+      <path d="M72 304 Q96 294 120 304 Q96 309 72 304Z" fill="#2b1d18"/>
+      <path d="M76 312 Q96 330 116 312 Q96 320 76 312Z" fill="#fff"/>
+      <path d="M68 276 q8 -7 16 0 M108 276 q8 -7 16 0" stroke="#2b1d18" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <path d="M64 262 q12 -5 24 -1 M104 261 q12 -4 24 1" stroke="#2b1d18" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="70" cy="294" r="6" fill="#d77d78" opacity=".3"/><circle cx="124" cy="294" r="6" fill="#d77d78" opacity=".3"/>
+      <path d="M42 250 C40 196 76 178 108 182 C144 186 156 214 154 252 C126 240 74 238 42 250Z" fill="#26292d"/>
+      <path d="M44 250 C24 246 4 250 -6 258 C10 266 34 264 54 256Z" fill="#1e2124"/>
+      <path d="M106 204 l2.6 5.4 l5.9 .8 l-4.3 4.1 l1 5.9 l-5.2 -2.8 l-5.2 2.8 l1 -5.9 l-4.3 -4.1 l5.9 -.8z" fill="#f1f1f1"/>
+
+      <g class="beat"><path d="M150 168 C150 160 160 158 162 166 C164 158 174 160 174 168 C174 176 162 182 162 186 C162 182 150 176 150 168Z" fill="#d6687f"/></g>
+    </svg>
+    <p>O pôr do sol mais bonito é sempre do seu lado.</p>
   </div>
 
   <div class="paper">
@@ -672,7 +728,7 @@ render();
   function deal() { moved.clear(); reset.hidden = true; z = papers.length + 1; papers.forEach(place); }
   deal();
   papers.forEach((p, i) => {
-    if (p.classList.contains('heart')) return;
+    if (p.classList.contains('finale')) return;
     let sx, sy, ox, oy, id = null;
     p.addEventListener('pointerdown', e => { id = e.pointerId; p.setPointerCapture(id); sx = e.clientX; sy = e.clientY; ox = +p.dataset.x; oy = +p.dataset.y; p.style.zIndex = ++z; p.classList.add('dragging'); });
     p.addEventListener('pointermove', e => { if (e.pointerId !== id) return; p.dataset.x = ox + e.clientX - sx; p.dataset.y = oy + e.clientY - sy; p.dataset.r = (+p.dataset.r + (e.movementX || 0) * 0.04).toFixed(2); apply(p); });
