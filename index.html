@@ -376,6 +376,8 @@ html.layer-open, html.layer-open body { overflow: hidden; }
 .score { font-family: var(--display); font-size: 84px; line-height: 1; text-align: center; color: var(--rose); font-variant-numeric: lining-nums tabular-nums; }
 .score small { font-size: 34px; color: var(--muted); }
 
+.stage .lead.stat { display: inline-block; align-self: center; background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-size: 14px; color: var(--ink); }
+.stage .lead.stat strong { color: var(--rose); }
 .gifts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .gift { font: 600 14px/1.25 var(--body); color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 16px 8px 14px;
   display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; text-align: center; transition: transform .15s, border-color .2s, box-shadow .2s; }
@@ -1274,7 +1276,7 @@ const Music = (() => {
     set(k, v) { try { localStorage.setItem('geo-' + k, v); } catch (e) {} }
   };
   if (location.hash === '#zerar') {
-    ['attempts', 'first', 'passed', 'gift'].forEach(k => { try { localStorage.removeItem('geo-' + k); } catch (e) {} });
+    ['attempts', 'first', 'passed', 'gift', 'pass-attempt', 'pass-score'].forEach(k => { try { localStorage.removeItem('geo-' + k); } catch (e) {} });
     try { history.replaceState(null, '', location.pathname); } catch (e) {}
   }
   const $ = id => document.getElementById(id);
@@ -1330,7 +1332,7 @@ const Music = (() => {
     attempt += 1; store.set('attempts', attempt);
     const pass = score >= 4;
     if (pass && attempt === 1) { firstPass = true; store.set('first', '1'); }
-    if (pass) store.set('passed', '1');
+    if (pass) { store.set('passed', '1'); if (!store.get('pass-attempt')) { store.set('pass-attempt', attempt); store.set('pass-score', score); } }
     stage.innerHTML = `<div class="pop-in" style="display:flex;flex-direction:column;gap:16px">
       <span class="eyebrow">Resultado</span>
       <div class="score">${score}<small>/${QUIZ.length}</small></div>
@@ -1353,6 +1355,10 @@ const Music = (() => {
   const giftHTML = (locked, sel) => `<div class="gifts${locked ? ' locked' : ''}" role="group" aria-label="Presentes">${GIFTS.map(g =>
       `<button class="gift${sel === g.id ? ' sel' : ''}" type="button" data-id="${g.id}"${locked ? ' disabled' : ''}>${g.svg}<span>${g.name}</span></button>`).join('')}</div>`;
 
+  function badge() {
+    const at = store.get('pass-attempt') || attempt, sc = store.get('pass-score') || score;
+    return `<p class="lead stat">Você passou na <strong>${at}ª tentativa</strong>, com <strong>${sc} de ${QUIZ.length}</strong> acertos.</p>`;
+  }
   function final() {
     rain();
     const chosen = store.get('gift');
@@ -1361,6 +1367,7 @@ const Music = (() => {
       fin.innerHTML = `<div class="pop-in" style="display:flex;flex-direction:column;gap:18px">
         <span class="eyebrow">Parte 5 · Final</span>
         <h2>Parabéns, Geovanna!</h2>
+        ${badge()}
         <p class="lead">Você chegou até o fim e acertou de primeira. Isso merece um presente, e quem escolhe é você:</p>
         ${giftHTML(false)}
         <button class="cta" id="g-ok" type="button" hidden>Confirmar escolha</button></div>`;
@@ -1374,6 +1381,7 @@ const Music = (() => {
       fin.innerHTML = `<div class="pop-in" style="display:flex;flex-direction:column;gap:18px">
         <span class="eyebrow">Parte 5 · Final</span>
         <h2>Parabéns, Geovanna!</h2>
+        ${badge()}
         <p class="lead">Você chegou até o fim! Agora vou te contar um segredo: se tivesse acertado de primeira, você teria o direito de escolher um destes presentes.</p>
         ${giftHTML(true)}
         <div class="note-card"><p>Mas como não acertou de primeira, quem vai escolher o presente sou eu.</p><span class="hand">Pode esperar que vem coisa boa.</span></div></div>`;
@@ -1384,6 +1392,7 @@ const Music = (() => {
     fin.innerHTML = `<div class="pop-in" style="display:flex;flex-direction:column;gap:18px">
       <span class="eyebrow">Parte 5 · Final</span>
       <h2>Escolha feita!</h2>
+      ${badge()}
       ${giftHTML(true, id)}
       <div class="note-card"><p>Você escolheu: <strong>${esc(g.name)}</strong>.</p><span class="hand">Tira um print dessa tela e me manda. O resto é comigo.</span></div></div>`;
   }
