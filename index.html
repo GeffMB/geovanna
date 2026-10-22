@@ -1273,6 +1273,10 @@ const Music = (() => {
     get(k) { try { return localStorage.getItem('geo-' + k); } catch (e) { return null; } },
     set(k, v) { try { localStorage.setItem('geo-' + k, v); } catch (e) {} }
   };
+  if (location.hash === '#zerar') {
+    ['attempts', 'first', 'passed', 'gift'].forEach(k => { try { localStorage.removeItem('geo-' + k); } catch (e) {} });
+    try { history.replaceState(null, '', location.pathname); } catch (e) {}
+  }
   const $ = id => document.getElementById(id);
   const L3 = $('layer3'), L4 = $('layer4'), L5 = $('layer5'), stage = $('quiz-stage'), fin = $('final-stage');
   let attempt = +(store.get('attempts') || 0), firstPass = store.get('first') === '1', idx = 0, score = 0, marks = [];
@@ -1297,7 +1301,6 @@ const Music = (() => {
     $('q-start').onclick = begin;
   }
   function begin() {
-    attempt += 1; store.set('attempts', attempt);
     idx = 0; score = 0; marks = [];
     ask();
   }
@@ -1324,6 +1327,7 @@ const Music = (() => {
     nx.onclick = () => { idx++; idx < QUIZ.length ? ask() : result(); };
   }
   function result() {
+    attempt += 1; store.set('attempts', attempt);
     const pass = score >= 4;
     if (pass && attempt === 1) { firstPass = true; store.set('first', '1'); }
     if (pass) store.set('passed', '1');
