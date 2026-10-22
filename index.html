@@ -1111,7 +1111,7 @@ render();
 /* Música: arquivo musica.mp3 tocando em loop contínuo */
 const Music = (() => {
   let ctx = null, gain = null, src = null, buf = null, loading = null, on = false;
-  const VOL = 0.75;
+  const VOL = 0.6;
   function trimBounds(b) {
     const d = b.getChannelData(0), th = 1e-4;
     let a = 0, z = d.length - 1;
