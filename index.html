@@ -196,6 +196,70 @@ html.layer-open, html.layer-open body { overflow: hidden; }
 .layer2 .bottom button:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .layer2 { transition: none; } }
 
+/* Parte 3: o filminho */
+.layer3 { position: fixed; inset: 0; z-index: 60; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity .6s ease; overflow: hidden; }
+.layer3.show { opacity: 1; }
+.layer3 .bg-deco { position: absolute; }
+.film { position: relative; width: min(420px, calc(100vw - 24px)); max-height: calc(100% - 120px); height: auto; display: block;
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 60%, transparent 100%);
+          mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 60%, transparent 100%); }
+.layer3 .bottom { position: absolute; left: 0; right: 0; bottom: env(safe-area-inset-bottom, 0px); padding-block: 0 18px; display: flex; justify-content: center;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.layer3 .bottom button, .layer2 .bottom .go3 { font: 600 14px var(--body); color: var(--rose); background: var(--paper); border: 1px solid var(--line);
+  border-radius: 999px; padding: 9px 18px; cursor: pointer; }
+.layer2 .bottom .go3 { color: var(--paper); background: var(--rose); border-color: var(--rose); }
+.layer3 .bottom button:focus-visible, .layer2 .bottom .go3:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; }
+
+.film .fade { fill: var(--bg); }
+.film .dusk, .film .stars, .film .night, .film .flies, .film .hearts path { opacity: 0; }
+.film .birds { transform: translate(-80px, 92px); }
+.film.play .sun   { animation: f3-sun 12s ease-in-out infinite; }
+.film.play .glow  { animation: f3-glow 12s ease-in-out infinite; }
+.film.play .clouds{ animation: f3-clouds 12s linear infinite; }
+.film.play .dusk  { animation: f3-dusk 12s ease-in-out infinite; }
+.film.play .stars { animation: f3-stars 12s ease-in-out infinite; }
+.film.play .night { animation: f3-night 12s ease-in-out infinite; }
+.film.play .flies { animation: f3-flies 12s ease-in-out infinite; }
+.film.play .birds { animation: f3-birds 12s linear infinite; }
+.film.play .her   { animation: f3-her 12s ease-in-out infinite; transform-box: view-box; transform-origin: 150px 420px; }
+.film.play .him   { animation: f3-him 12s ease-in-out infinite; transform-box: view-box; transform-origin: 270px 420px; }
+.film.play .hearts .h1 { animation: f3-h1 12s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+.film.play .hearts .h2 { animation: f3-h2 12s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+.film.play .hearts .h3 { animation: f3-h3 12s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+.film.play .fade  { animation: f3-fade 12s linear infinite; }
+.film.play .wing  { animation: f3-flap .45s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: center; }
+.film.play .tw    { animation: f3-tw 1.8s ease-in-out infinite alternate; }
+.film.play .fly   { animation: f3-fly 4s ease-in-out infinite alternate; }
+
+@keyframes f3-sun    { 0%,6% { transform: translateY(0); } 72%,100% { transform: translateY(64px); } }
+@keyframes f3-glow   { 0%,6% { opacity: 1; } 70%,100% { opacity: 0; } }
+@keyframes f3-clouds { 0% { transform: translateX(-18px); } 100% { transform: translateX(26px); } }
+@keyframes f3-dusk   { 0%,40% { opacity: 0; } 78%,100% { opacity: .92; } }
+@keyframes f3-stars  { 0%,58% { opacity: 0; } 80%,100% { opacity: 1; } }
+@keyframes f3-night  { 0%,42% { opacity: 0; } 80%,100% { opacity: .5; } }
+@keyframes f3-flies  { 0%,66% { opacity: 0; } 84%,100% { opacity: 1; } }
+@keyframes f3-birds  { 0%,8% { transform: translate(-80px, 92px); } 46%,100% { transform: translate(470px, 60px); } }
+@keyframes f3-her    { 0%,14% { transform: rotate(0); } 26%,100% { transform: rotate(9deg); } }
+@keyframes f3-him    { 0%,18% { transform: rotate(0); } 30%,100% { transform: rotate(-3deg); } }
+@keyframes f3-h1     { 0%,30% { opacity: 0; transform: translateY(10px) scale(.3); } 38% { opacity: 1; transform: translateY(0) scale(1.15); } 42% { transform: translateY(-4px) scale(1); }
+                       60% { opacity: .9; transform: translateY(-46px) scale(1); } 70%,100% { opacity: 0; transform: translateY(-70px) scale(.9); } }
+@keyframes f3-h2     { 0%,34% { opacity: 0; transform: translate(0, 6px) scale(.3); } 42% { opacity: 1; transform: translate(-4px, -4px) scale(1); }
+                       64%,100% { opacity: 0; transform: translate(-18px, -60px) scale(.8); } }
+@keyframes f3-h3     { 0%,36% { opacity: 0; transform: translate(0, 6px) scale(.3); } 44% { opacity: 1; transform: translate(4px, -4px) scale(1); }
+                       66%,100% { opacity: 0; transform: translate(18px, -58px) scale(.8); } }
+@keyframes f3-fade   { 0% { opacity: 1; } 5% { opacity: 0; } 90% { opacity: 0; } 96%,100% { opacity: 1; } }
+@keyframes f3-flap   { from { transform: scaleY(1); } to { transform: scaleY(.35); } }
+@keyframes f3-tw     { from { opacity: .35; } to { opacity: 1; } }
+@keyframes f3-fly    { from { transform: translate(0, 0); } to { transform: translate(8px, -14px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .film.play * { animation: none !important; }
+  .film .fade { opacity: 0; }
+  .film .hearts .h1 { opacity: 1; }
+  .layer3 { transition: none; }
+}
+
 footer { text-align: center; color: var(--muted); font-size: 13px; }
 
 @media (prefers-reduced-motion: reduce) { .card { transition: none; } #petals { display: none; } }
@@ -615,7 +679,133 @@ footer { text-align: center; color: var(--muted); font-size: 13px; }
 </div>
   <div class="bottom">
     <button type="button" id="reset2" hidden>Ler de novo</button>
+    <button type="button" class="go3" id="go3" hidden>Mais uma surpresa</button>
     <button type="button" id="close2">Voltar para a primeira parte</button>
+  </div>
+</section>
+
+<section class="layer3" id="layer3" hidden aria-label="Parte 3: animação">
+  <div class="bg-deco" aria-hidden="true"></div>
+  <svg class="film" viewBox="0 0 400 480" role="img" aria-label="Animação curta: Geferson e Geovanna juntos na roça enquanto o sol se põe e o céu se enche de estrelas">
+      <defs>
+        <linearGradient id="f3-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#6d7fb3"/><stop offset=".45" stop-color="#e7a9a6"/><stop offset=".78" stop-color="#f7b878"/><stop offset="1" stop-color="#f59a5a"/>
+        </linearGradient>
+        <linearGradient id="f3-dusk" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#141a3a"/><stop offset=".7" stop-color="#3b2d5a"/><stop offset="1" stop-color="#7a4560"/>
+        </linearGradient>
+        <radialGradient id="f3-glow" cx="250" cy="206" r="140" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#fff3cf" stop-opacity=".95"/><stop offset=".35" stop-color="#ffd59a" stop-opacity=".5"/><stop offset="1" stop-color="#ffd59a" stop-opacity="0"/>
+        </radialGradient>
+        <clipPath id="f3-skyclip"><rect width="400" height="214"/></clipPath>
+      </defs>
+
+      <g clip-path="url(#f3-skyclip)">
+        <rect width="400" height="214" fill="url(#f3-sky)"/>
+        <g class="clouds">
+          <g fill="#f4a98a" opacity=".85"><ellipse cx="90" cy="70" rx="70" ry="9"/><ellipse cx="130" cy="58" rx="40" ry="7"/><ellipse cx="320" cy="120" rx="66" ry="8"/></g>
+          <g fill="#a9b3d6" opacity=".8"><ellipse cx="250" cy="48" rx="62" ry="10"/><ellipse cx="290" cy="40" rx="34" ry="8"/></g>
+        </g>
+        <circle class="glow" cx="250" cy="206" r="140" fill="url(#f3-glow)"/>
+        <circle class="sun" cx="250" cy="192" r="24" fill="#fff1cf"/>
+        <g class="birds" fill="none" stroke="#5a3d55" stroke-width="1.8" stroke-linecap="round">
+          <path class="wing" d="M0 0 q6 -6 12 0 q6 -6 12 0"/>
+          <path class="wing" d="M30 -14 q5 -5 10 0 q5 -5 10 0" style="animation-delay:-.2s"/>
+          <path class="wing" d="M-22 -22 q5 -5 10 0 q5 -5 10 0" style="animation-delay:-.1s"/>
+        </g>
+        <rect class="dusk" width="400" height="214" fill="url(#f3-dusk)"/>
+        <g class="stars" fill="#fff8e6"><circle cx="173" cy="48" r="1.8" class="tw" style="animation-delay:-1.30s"/><circle cx="45" cy="147" r="0.9"/><circle cx="195" cy="24" r="1.1"/><circle cx="27" cy="32" r="1.8" class="tw" style="animation-delay:-0.84s"/><circle cx="131" cy="33" r="1.8"/><circle cx="38" cy="41" r="1.1"/><circle cx="330" cy="25" r="1.8" class="tw" style="animation-delay:-0.10s"/><circle cx="121" cy="21" r="1.1"/><circle cx="156" cy="117" r="1.1"/><circle cx="284" cy="40" r="1.4" class="tw" style="animation-delay:-1.12s"/><circle cx="357" cy="56" r="0.9"/><circle cx="305" cy="58" r="1.4"/><circle cx="57" cy="150" r="0.9" class="tw" style="animation-delay:-1.13s"/><circle cx="324" cy="62" r="1.8"/><circle cx="356" cy="146" r="1.8"/><circle cx="168" cy="129" r="1.8" class="tw" style="animation-delay:-0.72s"/><circle cx="135" cy="56" r="1.1"/><circle cx="49" cy="86" r="1.8"/><circle cx="183" cy="124" r="1.4" class="tw" style="animation-delay:-1.22s"/><circle cx="45" cy="40" r="1.8"/><circle cx="92" cy="97" r="1.1"/><circle cx="258" cy="117" r="0.9" class="tw" style="animation-delay:-1.92s"/><circle cx="47" cy="90" r="1.4"/><circle cx="363" cy="99" r="1.8"/><circle cx="304" cy="126" r="0.9" class="tw" style="animation-delay:-1.68s"/><circle cx="146" cy="131" r="0.9"/><circle cx="39" cy="89" r="1.8"/><circle cx="153" cy="108" r="1.4" class="tw" style="animation-delay:-0.05s"/><circle cx="244" cy="100" r="1.1"/><circle cx="320" cy="39" r="1.8"/><circle cx="38" cy="65" r="1.4" class="tw" style="animation-delay:-0.26s"/><circle cx="134" cy="111" r="1.8"/><circle cx="262" cy="30" r="1.1"/><circle cx="237" cy="112" r="1.4" class="tw" style="animation-delay:-1.77s"/></g>
+      </g>
+
+      <g fill="#36493c"><circle cx="-10" cy="204" r="15"/><rect x="-11.5" y="204" width="3" height="12"/><circle cx="12" cy="205" r="13"/><rect x="10.5" y="205" width="3" height="11"/><circle cx="34" cy="208" r="15"/><rect x="32.5" y="208" width="3" height="8"/><circle cx="56" cy="209" r="15"/><rect x="54.5" y="209" width="3" height="7"/><circle cx="78" cy="210" r="11"/><rect x="76.5" y="210" width="3" height="6"/><circle cx="100" cy="209" r="11"/><rect x="98.5" y="209" width="3" height="7"/><circle cx="122" cy="205" r="12"/><rect x="120.5" y="205" width="3" height="11"/><circle cx="144" cy="210" r="12"/><rect x="142.5" y="210" width="3" height="6"/><circle cx="270" cy="204" r="16"/><rect x="268.5" y="204" width="3" height="12"/><circle cx="294" cy="208" r="11"/><rect x="292.5" y="208" width="3" height="8"/><circle cx="318" cy="210" r="13"/><rect x="316.5" y="210" width="3" height="6"/><circle cx="342" cy="207" r="11"/><rect x="340.5" y="207" width="3" height="9"/><circle cx="366" cy="206" r="14"/><rect x="364.5" y="206" width="3" height="10"/><circle cx="390" cy="209" r="14"/><rect x="388.5" y="209" width="3" height="7"/><circle cx="414" cy="207" r="9"/><rect x="412.5" y="207" width="3" height="9"/></g>
+      <rect y="212" width="400" height="268" fill="#a9533a"/>
+      <g>
+          <path d="M210 214 L-900 480 L-846 480Z" fill="#c39060" opacity="0.7"/>
+          <path d="M210 214 L-830 480 L-776 480Z" fill="#a9533a" opacity="1"/>
+          <path d="M210 214 L-760 480 L-706 480Z" fill="#c39060" opacity="0.7"/>
+          <path d="M210 214 L-690 480 L-636 480Z" fill="#a9533a" opacity="1"/>
+          <path d="M210 214 L-620 480 L-566 480Z" fill="#c39060" opacity="0.7"/>
+          <path d="M210 214 L-550 480 L-496 480Z" fill="#a9533a" opacity="1"/>
+          <path d="M210 214 L-480 480 L-426 480Z" fill="#c39060" opacity="0.7"/>
+          <path d="M210 214 L-410 480 L-356 480Z" fill="#a9533a" opacity="1"/>
+          <path d="M210 214 L-340 480 L-286 480Z" fill="#c39060" opacity="0.7"/>
+          <path d="M210 214 L-270 480 L-216 480Z" fill="#a9533a" opacity="1"/>
+          <path d="M210 214 L-200 480 L-146 480Z" fill="#c39060" opacity="0.7"/>
+          <path d="M210 214 L-130 480 L-76 480Z" fill="#a9533a" opacity="1"/>
+          <path d="M210 214 L-60 480 L-6 480Z" fill="#c39060" opacity="0.7"/>
+          <path d="M210 214 L10 480 L64 480Z" fill="#a9533a" opacity="1"/>
+          <path d="M210 214 L80 480 L134 480Z" fill="#c39060" opacity="0.7"/>
+          <path d="M210 214 L150 480 L204 480Z" fill="#a9533a" opacity="1"/>
+          <path d="M210 214 L220 480 L274 480Z" fill="#c39060" opacity="0.7"/>
+          <path d="M210 214 L290 480 L344 480Z" fill="#a9533a" opacity="1"/>
+          <path d="M210 214 L360 480 L414 480Z" fill="#c39060" opacity="0.7"/>
+          <path d="M210 214 L430 480 L484 480Z" fill="#a9533a" opacity="1"/>
+          <path d="M210 214 L500 480 L554 480Z" fill="#c39060" opacity="0.7"/>
+          <path d="M210 214 L570 480 L624 480Z" fill="#a9533a" opacity="1"/>
+          <path d="M210 214 L640 480 L694 480Z" fill="#c39060" opacity="0.7"/>
+          <path d="M210 214 L710 480 L764 480Z" fill="#a9533a" opacity="1"/>
+          <path d="M210 214 L780 480 L834 480Z" fill="#c39060" opacity="0.7"/>
+          <path d="M210 214 L850 480 L904 480Z" fill="#a9533a" opacity="1"/>
+          <path d="M210 214 L920 480 L974 480Z" fill="#c39060" opacity="0.7"/>
+          <path d="M210 214 L990 480 L1044 480Z" fill="#a9533a" opacity="1"/>
+          <path d="M210 214 L1060 480 L1114 480Z" fill="#c39060" opacity="0.7"/>
+          <path d="M210 214 L1130 480 L1184 480Z" fill="#a9533a" opacity="1"/>
+          <path d="M210 214 L1200 480 L1254 480Z" fill="#c39060" opacity="0.7"/>
+          <path d="M210 214 L1270 480 L1324 480Z" fill="#a9533a" opacity="1"/>
+          <path d="M210 214 L1340 480 L1394 480Z" fill="#c39060" opacity="0.7"/>
+      </g>
+      <g stroke="#e8ecee" stroke-width="3" stroke-linecap="round" opacity=".9">
+        <path d="M330 300 V262 M352 316 V270 M378 334 V280"/><path d="M322 270 L392 286 M322 282 L392 300"/>
+      </g>
+
+      <!-- ela -->
+      <g class="her">
+        <path d="M84 480 C70 420 76 330 104 292 C124 266 178 262 196 296 C210 330 206 400 214 480Z" fill="#2f1d19"/>
+        <path d="M60 480 C66 430 96 406 150 402 C190 406 214 430 222 480Z" fill="#c48a63"/>
+        <path d="M96 480 C102 452 122 440 150 438 C178 440 196 452 202 480Z" fill="#1f1a1e"/>
+        <path d="M120 440 L112 410 M180 440 L188 410" stroke="#1f1a1e" stroke-width="4" stroke-linecap="round"/>
+        <path d="M132 374 h36 v34 c-10 8 -26 8 -36 0z" fill="#b67b55"/>
+        <ellipse cx="150" cy="334" rx="44" ry="52" fill="#c48a63"/>
+        <path d="M104 334 C98 278 138 262 160 266 C188 268 202 290 198 330 C186 306 168 294 150 292 C130 300 116 314 104 334Z" fill="#2f1d19"/>
+        <path d="M106 320 C92 380 94 430 108 470 C116 420 114 370 118 334Z" fill="#3e2620"/>
+        <path d="M126 336 q8 -7 16 0 M158 336 q8 -7 16 0" stroke="#2e1c18" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+        <path d="M125 322 q9 -5 18 -2 M157 321 q9 -5 18 -1" stroke="#2e1c18" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <circle cx="128" cy="354" r="7" fill="#e48a96" opacity=".45"/><circle cx="174" cy="354" r="7" fill="#e48a96" opacity=".45"/>
+        <path d="M136 362 Q150 378 166 362 Q150 369 136 362Z" fill="#fff" stroke="#a24d5a" stroke-width="1.5" stroke-linejoin="round"/>
+        <circle cx="107" cy="350" r="2.2" fill="#ecebf0"/>
+      </g>
+
+      <!-- ele -->
+      <g class="him">
+        <path d="M200 480 C206 420 236 396 282 392 C330 396 362 424 370 480Z" fill="#9aa1a8"/>
+        <g transform="translate(320 448)"><circle r="12" fill="#2f3438"/><circle r="5" fill="#9aa1a8"/></g>
+        <path d="M246 360 h36 v38 c-10 8 -26 8 -36 0z" fill="#94603f"/>
+        <ellipse cx="310" cy="324" rx="7" ry="11" fill="#9a6646"/>
+        <ellipse cx="264" cy="322" rx="46" ry="54" fill="#a8714f"/>
+        <path d="M220 330 C222 368 240 380 264 380 C288 380 306 368 308 330 C298 348 284 352 264 352 C244 352 230 348 220 330Z" fill="#2b1d18"/>
+        <path d="M242 342 Q264 333 286 342 Q264 346 242 342Z" fill="#2b1d18"/>
+        <path d="M246 350 Q264 365 282 350 Q264 357 246 350Z" fill="#fff"/>
+        <path d="M238 318 q8 -7 16 0 M274 318 q8 -7 16 0" stroke="#2b1d18" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+        <path d="M236 304 q11 -5 22 -1 M272 303 q11 -4 22 1" stroke="#2b1d18" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="240" cy="336" r="6" fill="#d77d78" opacity=".3"/><circle cx="288" cy="336" r="6" fill="#d77d78" opacity=".3"/>
+        <path d="M216 296 C214 248 244 228 270 230 C300 232 314 256 312 294 C288 284 240 284 216 296Z" fill="#23262a"/>
+        <path d="M218 294 C202 290 186 294 178 302 C192 310 212 306 228 298Z" fill="#1b1d20"/>
+        <path d="M266 248 l2.6 5.4 l5.9 .8 l-4.3 4.1 l1 5.9 l-5.2 -2.8 l-5.2 2.8 l1 -5.9 l-4.3 -4.1 l5.9 -.8z" fill="#f1f1f1"/>
+      </g>
+
+      <rect class="night" y="200" width="400" height="280" fill="#141a3a"/>
+      <g class="flies" fill="#ffe9a3"><circle class="fly" cx="358" cy="434" r="2.6" style="animation-delay:-1.57s, 0s"/><circle class="fly" cx="214" cy="330" r="1.8" style="animation-delay:-1.93s, 0s"/><circle class="fly" cx="215" cy="245" r="1.8" style="animation-delay:-0.27s, 0s"/><circle class="fly" cx="116" cy="342" r="1.8" style="animation-delay:-0.44s, 0s"/><circle class="fly" cx="317" cy="243" r="1.8" style="animation-delay:-0.00s, 0s"/><circle class="fly" cx="87" cy="367" r="1.8" style="animation-delay:-3.80s, 0s"/><circle class="fly" cx="324" cy="236" r="1.8" style="animation-delay:-3.50s, 0s"/><circle class="fly" cx="324" cy="326" r="1.8" style="animation-delay:-2.54s, 0s"/><circle class="fly" cx="187" cy="384" r="2.2" style="animation-delay:-1.90s, 0s"/><circle class="fly" cx="69" cy="447" r="2.2" style="animation-delay:-3.97s, 0s"/><circle class="fly" cx="248" cy="352" r="2.2" style="animation-delay:-1.25s, 0s"/><circle class="fly" cx="83" cy="256" r="2.6" style="animation-delay:-1.37s, 0s"/><circle class="fly" cx="145" cy="352" r="2.6" style="animation-delay:-0.65s, 0s"/><circle class="fly" cx="21" cy="282" r="2.6" style="animation-delay:-1.45s, 0s"/></g>
+
+      <g class="hearts" fill="#e0607d">
+        <path class="h1" d="M196 252 C196 244 206 242 208 250 C210 242 220 244 220 252 C220 260 208 266 208 270 C208 266 196 260 196 252Z"/>
+        <path class="h2" d="M182 262 C182 258 187 257 188 261 C189 257 194 258 194 262 C194 266 188 269 188 271 C188 269 182 266 182 262Z"/>
+        <path class="h3" d="M224 258 C224 254 229 253 230 257 C231 253 236 254 236 258 C236 262 230 265 230 267 C230 265 224 262 224 258Z"/>
+      </g>
+
+      <rect class="fade" width="400" height="480"/>
+    </svg>
+  <div class="bottom">
+    <button type="button" id="close3">Voltar</button>
   </div>
 </section>
 
@@ -734,7 +924,7 @@ render();
     p.addEventListener('pointermove', e => { if (e.pointerId !== id) return; p.dataset.x = ox + e.clientX - sx; p.dataset.y = oy + e.clientY - sy; p.dataset.r = (+p.dataset.r + (e.movementX || 0) * 0.04).toFixed(2); apply(p); });
     const end = e => { if (e.pointerId !== id) return; id = null; p.classList.remove('dragging');
       if (Math.hypot(+p.dataset.x, +p.dataset.y) > 80) moved.add(i); else moved.delete(i);
-      reset.hidden = moved.size < papers.length - 1; };
+      reset.hidden = moved.size < papers.length - 1; document.getElementById('go3').hidden = reset.hidden; };
     p.addEventListener('pointerup', end); p.addEventListener('pointercancel', end);
   });
   reset.addEventListener('click', deal);
@@ -748,6 +938,23 @@ render();
   });
 })();
 
+
+/* Parte 3 */
+(() => {
+  const layer = document.getElementById('layer3');
+  const film = layer.querySelector('.film');
+  const go = document.getElementById('go3');
+  document.getElementById('reset2').addEventListener('click', () => { go.hidden = true; });
+  go.addEventListener('click', () => {
+    film.classList.remove('play'); void film.getBoundingClientRect(); film.classList.add('play');
+    layer.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => layer.classList.add('show')));
+  });
+  document.getElementById('close3').addEventListener('click', () => {
+    layer.classList.remove('show');
+    setTimeout(() => { layer.hidden = true; film.classList.remove('play'); }, 550);
+  });
+})();
 </script>
 </body>
 </html>
